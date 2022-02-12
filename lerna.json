@@ -3,9 +3,6 @@
   "npmClient": "yarn",
   "packages": [
     "shell",
-    "mfe1", 
-    "mfe2",
-    "mfe3",
-    "mfe4-react"
+    "mfe1"
   ]
 }
