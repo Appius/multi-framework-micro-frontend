@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, Injector } from '@angular/core';
+import { InjectionToken, NgModule, Injector } from '@angular/core';
 import { createCustomElement } from '@angular/elements';
 
 import { AppComponent } from './app.component';
@@ -7,6 +7,15 @@ import { RouterModule } from '@angular/router';
 import { endsWith } from './router.utils';
 import { AComponent } from './a/a.component';
 import { BComponent } from './b/b.component';
+import { Action, ActionReducerMap, StoreModule } from '@ngrx/store';
+
+export function someStateReducer(state = { foo: 'bar' }, action: Action) {
+  return state;
+}
+
+export const mfe1StateReducer: ActionReducerMap<{}> = {
+    someState: someStateReducer
+};
 
 @NgModule({
   imports: [
@@ -14,7 +23,8 @@ import { BComponent } from './b/b.component';
     RouterModule.forRoot([
       { matcher: endsWith('a'), component: AComponent},
       { matcher: endsWith('b'), component: BComponent},
-    ])
+    ]),
+    StoreModule.forFeature('mfe1', mfe1StateReducer)
   ],
   declarations: [
     AComponent,

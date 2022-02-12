@@ -29,7 +29,9 @@ const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPl
                 // // React: loaded as script file
                 // 'mfe4': "script mfe4@http://localhost:4204/remoteEntry.js", 
               },
-            shared: ["@angular/core", "@angular/common", "@angular/router"]
+            shared: [
+            "@angular/core", "@angular/common", "@angular/router",
+            "@ngrx/effects", "@ngrx/store", "@ngrx/store-devtools", "@ngrx/router-store"]
         })
       ],
     };

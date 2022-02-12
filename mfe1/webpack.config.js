@@ -31,7 +31,9 @@ module.exports = {
       },
       */
 
-      shared: ["@angular/core", "@angular/common", "@angular/router"]
+      shared: [
+            "@angular/core", "@angular/common", "@angular/router",
+            "@ngrx/effects", "@ngrx/store", "@ngrx/store-devtools", "@ngrx/router-store"]
     })
   ],
 };
