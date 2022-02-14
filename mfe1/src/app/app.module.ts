@@ -8,28 +8,21 @@ import { endsWith } from './router.utils';
 import { AComponent } from './a/a.component';
 import { BComponent } from './b/b.component';
 import { Action, ActionReducerMap, StoreModule } from '@ngrx/store';
-
-export function someStateReducer(state = { foo: 'bar' }, action: Action) {
-  return state;
-}
-
-export const mfe1StateReducer: ActionReducerMap<{}> = {
-    someState: someStateReducer
-};
+import { EffectsModule } from '@ngrx/effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { CommonModule } from '@angular/common';
+import { BootstrapModule } from './bootstrap.module';
 
 @NgModule({
   imports: [
     BrowserModule,
-    RouterModule.forRoot([
-      { matcher: endsWith('a'), component: AComponent},
-      { matcher: endsWith('b'), component: BComponent},
-    ]),
-    StoreModule.forFeature('mfe1', mfe1StateReducer)
+    StoreModule.forRoot({}),
+    EffectsModule.forRoot([]),
+    StoreDevtoolsModule.instrument({ name: 'mfe1' }),
+    RouterModule.forRoot([]),
+    BootstrapModule
   ],
   declarations: [
-    AComponent,
-    BComponent,
-    AppComponent
   ],
   providers: [],
   bootstrap: []

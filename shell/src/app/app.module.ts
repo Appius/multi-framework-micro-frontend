@@ -9,42 +9,23 @@ import { WrapperComponent } from './wrapper/wrapper.component';
 import { Action, ActionReducerMap, StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-
-export function sharedReducer(state = { userName: 'John'}, action: Action) {
-    switch (action.type) {
-        default:
-            return state;
-    }
-}
-
-export const ROOT_REDUCERS = new InjectionToken<ActionReducerMap<{}, Action>>(
-  'Root reducers token',
-  {
-    factory: () => ({
-      shared: sharedReducer
-    }),
-  },
-);
-
+import { BootstrapModule } from './bootstrap.module';
+import { registry } from './registry';
 
 @NgModule({
   imports: [
     BrowserModule,
 
-    StoreModule.forRoot(ROOT_REDUCERS),
+    StoreModule.forRoot({}),
     EffectsModule.forRoot([]),
-    StoreDevtoolsModule.instrument({
-        name: 'Store Dev Tools',
-        maxAge: 50
-    }),
+    StoreDevtoolsModule.instrument({ name: 'shell' }),
+
+    BootstrapModule,
 
     RouterModule.forRoot([
-    { path: '', component: HomeComponent, pathMatch: 'full' },
-    { matcher: startsWith('mfe1'), component: WrapperComponent, data: { importName: 'mfe1', elementName: 'mfe1-element' } },
-    { matcher: startsWith('mfe2'), component: WrapperComponent, data: { importName: 'mfe2', elementName: 'mfe2-element' } },
-    { matcher: startsWith('mfe3'), component: WrapperComponent, data: { importName: 'mfe3', elementName: 'mfe3-element' } },
-    { matcher: startsWith('mfe4'), component: WrapperComponent, data: { importName: 'mfe4', elementName: 'mfe4-element' } },
-], { relativeLinkResolution: 'legacy' })
+        { path: '', component: HomeComponent, pathMatch: 'full' },
+        { matcher: startsWith('mfe1'), loadChildren: registry.mfe1 }
+    ], { relativeLinkResolution: 'legacy' })
   ],
   declarations: [
     AppComponent,

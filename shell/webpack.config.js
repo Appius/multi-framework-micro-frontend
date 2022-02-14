@@ -1,4 +1,6 @@
 const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPlugin");
+const mf = require("@angular-architects/module-federation/webpack");
+const shareAll = mf.shareAll;
 
     module.exports = {
       output: {
@@ -17,21 +19,14 @@ const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPl
   
             library: { type: "module" },
 
-            remotes: {
-                // // Angular 13: loaded as EcmaScript module 
-                // // (no remoteName needed like mfe1@... )
-                // 'mfe1': "http://localhost:4201/remoteEntry.js",
-                
-                // // Angular 12: loaded as script file
-                // 'mfe2': "script mfe2@http://localhost:4202/remoteEntry.js", 
-                // 'mfe3': "script mfe3@http://localhost:4203/remoteEntry.js", 
-
-                // // React: loaded as script file
-                // 'mfe4': "script mfe4@http://localhost:4204/remoteEntry.js", 
-              },
-            shared: [
-            "@angular/core", "@angular/common", "@angular/router",
-            "@ngrx/effects", "@ngrx/store", "@ngrx/store-devtools", "@ngrx/router-store"]
+      shared: {
+        ...shareAll({
+          singleton: true,
+          strictVersion: true,
+          requiredVersion: 'auto',
+          eager: true
+        })
+      }
         })
       ],
     };

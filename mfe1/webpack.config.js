@@ -1,4 +1,6 @@
 const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPlugin");
+const mf = require("@angular-architects/module-federation/webpack");
+const shareAll = mf.shareAll;
 
 module.exports = {
   output: {
@@ -22,6 +24,7 @@ module.exports = {
       filename: "remoteEntry.js",
       exposes: {
         './web-components': './src/bootstrap.ts', // bootstrap --> main --> AppModule --> WebComp
+        './bootstrap': './src/app/bootstrap.module.ts',
       },
 
       // For hosts (please adjust)
@@ -31,9 +34,14 @@ module.exports = {
       },
       */
 
-      shared: [
-            "@angular/core", "@angular/common", "@angular/router",
-            "@ngrx/effects", "@ngrx/store", "@ngrx/store-devtools", "@ngrx/router-store"]
+      shared: {
+        ...shareAll({
+          singleton: true,
+          strictVersion: true,
+          requiredVersion: 'auto',
+          eager: true
+        })
+      }
     })
   ],
 };
